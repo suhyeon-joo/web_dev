@@ -1,10 +1,15 @@
 package com.hae.web.has.ils.admin.service;
 
 
+import com.hae.web.global.dto.Header;
+import com.hae.web.global.dto.ResponseData;
+import com.hae.web.global.enums.HeaderCode;
+import com.hae.web.global.enums.HeaderMsg;
 import com.hae.web.global.exception.CommonException;
 import com.hae.web.has.ils.admin.model.IlsDept;
 import com.hae.web.has.ils.admin.repository.IlsDeptRepository;
 import lombok.extern.log4j.Log4j2;
+import org.hibernate.jdbc.Expectation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,23 +26,63 @@ public class IlsDeptServiceImpl implements IlsDeptService {
     @Autowired
     private IlsDeptRepository ilsDeptRepository;
 
-    public List<IlsDept> getDeptList(Long siteId, String deptName) {
+    public ResponseData<List<IlsDept>> getDeptList(Long siteId, String deptName) {
+        List<IlsDept> ilsDepts;
         if (deptName != null && !deptName.isEmpty()) {
-            return ilsDeptRepository.findBySiteIdAndIlsDeptNameContainingIgnoreCase(siteId, deptName);
+            ilsDepts = ilsDeptRepository.findBySiteIdAndIlsDeptNameContainingIgnoreCase(siteId, deptName);
+            return new ResponseData<>(
+                    Header.builder()
+                            .code(HeaderCode.OK.getCode())
+                            .message(HeaderMsg.ILS_DEPT_LIST_FOUND.getMsg())
+                            .build(),
+                    ilsDepts
+            );
+
         }
-        return ilsDeptRepository.findBySiteId(siteId);
+        ilsDepts = ilsDeptRepository.findBySiteId(siteId);
+        return new ResponseData<>(
+                Header.builder()
+                        .code(HeaderCode.OK.getCode())
+                        .message(HeaderMsg.ILS_DEPT_LIST_FOUND.getMsg())
+                        .build(),
+                ilsDepts
+        );
     }
 
-    public IlsDept getDept(Long siteId, Long deptId) {
-        return ilsDeptRepository.findBySiteIdAndIlsDeptId(siteId, deptId);
+    public ResponseData<IlsDept> getDept(Long siteId, Long deptId) {
+        IlsDept ilsDept = ilsDeptRepository.findBySiteIdAndIlsDeptId(siteId, deptId);
+
+        return new ResponseData<>(
+                Header.builder()
+                        .code(HeaderCode.OK.getCode())
+                        .message("get dept.")
+                        .build(),
+                ilsDept
+        );
     }
 
-    public IlsDept saveDept(IlsDept ilsDept) {
-        return ilsDeptRepository.save(ilsDept);
+    public ResponseData<IlsDept> saveDept(IlsDept ilsDept) {
+        ilsDeptRepository.save(ilsDept);
+
+        return new ResponseData<>(
+                Header.builder()
+                        .code(HeaderCode.OK.getCode())
+                        .message("save dept")
+                        .build(),
+                ilsDept
+        );
     }
 
-    public void deleteDept(Long siteId, Long deptId) {
-        IlsDept dept = getDept(siteId, deptId);
-        ilsDeptRepository.delete(dept);
+    public ResponseData<Void> deleteDept(Long siteId, Long deptId) {
+        ResponseData<IlsDept> ilsDept = getDept(siteId, deptId);
+        ilsDeptRepository.delete(ilsDept.getBody());
+
+        return new ResponseData<>(
+                Header.builder()
+                        .code(HeaderCode.OK.getCode())
+                        .message("delete Dept")
+                        .build(),
+                null
+        );
     }
 }

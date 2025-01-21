@@ -2,6 +2,7 @@ package com.hae.web.has.ils.admin.controller;
 
 import com.hae.web.global.dto.ResponseData;
 import com.hae.web.global.dto.Header;
+import com.hae.web.global.enums.HeaderCode;
 import com.hae.web.has.ils.admin.model.IlsDept;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -29,39 +30,51 @@ public class IlsDeptController {
 
     @Operation(summary = "ILS 부서 목록 조회", description = "특정 사이트의 부서 목록을 조회합니다.")
     @GetMapping("/list")
-    public ResponseData<List<IlsDept>> getDeptList(
+    public ResponseEntity<ResponseData<List<IlsDept>>> getDeptList(
             @RequestParam Long siteId,
             @RequestParam(required = false) String deptName) {
+        ResponseData<List<IlsDept>>responseData= ilsDeptService.getDeptList(siteId, deptName);
+        if(responseData.getHeader().getCode() == HeaderCode.OK.getCode())
+            return ResponseEntity.status(HttpStatus.OK).body(responseData);
 
-        List<IlsDept> deptList = ilsDeptService.getDeptList(siteId, deptName);
-        return new ResponseData<>(new Header(200, "Success", "ILS_DEPT_LIST_SUCCESS"), deptList);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseData);
     }
 
     @Operation(summary = "ILS 부서 단건 조회", description = "특정 부서 정보를 조회합니다.")
     @GetMapping("/{deptId}")
-    public ResponseData<IlsDept> getDept(
+    public ResponseEntity<ResponseData<IlsDept>> getDept(
             @RequestParam Long siteId,
             @PathVariable Long deptId) {
 
-        IlsDept dept = ilsDeptService.getDept(siteId, deptId);
-        return new ResponseData<>(new Header(200, "Success", "ILS_DEPT_GET_SUCCESS"), dept);
+        ResponseData<IlsDept> responseData= ilsDeptService.getDept(siteId, deptId);
+        if(responseData.getHeader().getCode() == HeaderCode.OK.getCode())
+            return ResponseEntity.status(HttpStatus.OK).body(responseData);
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseData);
     }
 
     @Operation(summary = "ILS 부서 저장", description = "새로운 부서를 저장합니다.")
     @PostMapping("/save")
-    public ResponseData<IlsDept> saveDept(@RequestBody IlsDept ilsDept) {
+    public ResponseEntity<ResponseData<IlsDept>> saveDept(@RequestBody IlsDept ilsDept) {
 
-        IlsDept savedDept = ilsDeptService.saveDept(ilsDept);
-        return new ResponseData<>(new Header(201, "Created", "ILS_DEPT_SAVE_SUCCESS"), savedDept);
+        ResponseData<IlsDept> responseData = ilsDeptService.saveDept(ilsDept);
+        if(responseData.getHeader().getCode() == HeaderCode.OK.getCode())
+            return ResponseEntity.status(HttpStatus.OK).body(responseData);
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseData);
     }
 
     @Operation(summary = "ILS 부서 삭제", description = "특정 부서를 삭제합니다.")
     @DeleteMapping("/delete/{deptId}")
-    public ResponseData<Void> deleteDept(
+    public ResponseEntity<ResponseData<Void>> deleteDept(
             @RequestParam Long siteId,
             @PathVariable Long deptId) {
 
-        ilsDeptService.deleteDept(siteId, deptId);
-        return new ResponseData<>(new Header(200, "Success", "ILS_DEPT_DELETE_SUCCESS"));
+        ResponseData<Void> responseData = ilsDeptService.deleteDept(siteId, deptId);
+
+        if(responseData.getHeader().getCode() == HeaderCode.OK.getCode())
+            return ResponseEntity.status(HttpStatus.OK).body(responseData);
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseData);
     }
 }

@@ -1,7 +1,7 @@
 package com.hae.web.global.dto;
 
 import lombok.*;
-
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
