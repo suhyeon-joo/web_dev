@@ -1,9 +1,8 @@
 package com.hae.global.jwt.util;
 
 import com.hae.global.conf.ConfigProperties;
-import com.hae.has.user.model.EsaUser;
+import com.hae.has.common.model.User;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -30,7 +29,7 @@ public class JwtUtil {
     @PostConstruct
     public void init() {this.key= Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKey));}
 
-    public String generateToken(EsaUser user, String tokenRole){
+    public String generateToken(User user, String tokenRole){
 
         return Jwts.builder()
                 .subject(user.getUsrNm())

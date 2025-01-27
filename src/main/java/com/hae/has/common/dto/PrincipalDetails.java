@@ -1,6 +1,6 @@
-package com.hae.has.user.dto;
+package com.hae.has.common.dto;
 
-import com.hae.has.user.model.EsaUser;
+import com.hae.has.common.model.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -20,7 +20,7 @@ public class PrincipalDetails implements UserDetails {
     @Serial
     private static final long serialVersionUID = -6283118026308823602L;
 
-    private final EsaUser user;
+    private final User user;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();
