@@ -3,6 +3,7 @@ package com.hae.has.common.service;
 import com.hae.global.dto.Header;
 import com.hae.global.dto.ResponseData;
 import com.hae.global.enums.HeaderCode;
+import com.hae.global.enums.HeaderCodeMsg;
 import com.hae.has.common.model.User;
 import com.hae.has.common.model.UserFcm;
 import com.hae.has.common.repository.UserFcmRepository;
@@ -22,32 +23,32 @@ public class UserServiceImpl implements UserService{
         String result = userRepository.checkIdAndPassword(accountId, password);
         if (result == null) {
             return  new ResponseData<>(Header.builder().code(HeaderCode.SERVER_ERROR.getCode())
-                    .message("Invalid credentials")
-                    .messageCd(null).build(), null);
+                    .message(HeaderCodeMsg.ERR_SERVER_DB_QUERY_NOT_WORK.getMsg())
+                    .messageCd(HeaderCodeMsg.ERR_SERVER_DB_QUERY_NOT_WORK.getCode()).build(), null);
         }
         return new ResponseData<>(Header.builder().code(HeaderCode.OK.getCode())
-                .message("successfully validateUserCredentials")
-                .messageCd(null).build(), result);
+                .message(HeaderCodeMsg.AUTH_SUCCESS.getMsg())
+                .messageCd(HeaderCodeMsg.AUTH_SUCCESS.getCode()).build(), result);
     }
 
     public ResponseData<String> updateUserToken(String userId, String fcmToken, String userToken, String mobileModel, String mobileOs, String osVersion, String appVersion, String writerId) {
         String result = userRepository.upsertUserToken(userId, fcmToken, userToken, mobileModel, mobileOs, osVersion, appVersion, writerId);
         if (result == null) {
             return new ResponseData<>(Header.builder().code(HeaderCode.SERVER_ERROR.getCode())
-                    .message("Failed to update token")
-                    .messageCd(null).build(), null);
+                    .message(HeaderCodeMsg.ERR_SERVER_DB_QUERY_NOT_WORK.getMsg())
+                    .messageCd(HeaderCodeMsg.ERR_SERVER_DB_QUERY_NOT_WORK.getCode()).build(), null);
         }
         return new ResponseData<>(Header.builder().code(HeaderCode.OK.getCode())
-                .message("Token updated successfully")
-                .messageCd(null).build(), result);
+                .message(HeaderCodeMsg.AUTH_TOKEN_UPDATE_SUCCESS.getMsg())
+                .messageCd(HeaderCodeMsg.AUTH_TOKEN_UPDATE_SUCCESS.getCode()).build(), result);
     }
 
     public ResponseData<User> getUserById(Long userId) {
         return userRepository.findById(userId)
                 .map(user -> new ResponseData<>(Header.builder().code(HeaderCode.OK.getCode())
                         .message("User found")
-                        .messageCd(null).build(), user))
-                .orElse(new ResponseData<>(Header.builder().code(HeaderCode.SERVER_ERROR.getCode()).message("User not found").messageCd(null).build() , null));
+                        .messageCd(200).build(), user))
+                .orElse(new ResponseData<>(Header.builder().code(HeaderCode.SERVER_ERROR.getCode()).message("User not found").messageCd(500).build() , null));
     }
 
     public ResponseData<User> selectUserById(String userId) {
@@ -55,8 +56,8 @@ public class UserServiceImpl implements UserService{
         if (user == null)
             return new ResponseData<>(Header.builder().code(HeaderCode.SERVER_ERROR.getCode())
                 .message("Failed to find User")
-                .messageCd(null).build(), null);
-        return new ResponseData<>(Header.builder().code(HeaderCode.OK.getCode()).message("find User successfully").messageCd(null).build(), user);
+                .messageCd(500).build(), null);
+        return new ResponseData<>(Header.builder().code(HeaderCode.OK.getCode()).message("find User successfully").messageCd(200).build(), user);
     }
 
     public ResponseData<String> deleteUserToken(String userToken) {
@@ -64,11 +65,11 @@ public class UserServiceImpl implements UserService{
         if (result == null) {
             return new ResponseData<>(Header.builder().code(HeaderCode.SERVER_ERROR.getCode())
                     .message("Failed to delete token")
-                    .messageCd(null).build(), null);
+                    .messageCd(500).build(), null);
         }
         return new ResponseData<>(Header.builder().code(HeaderCode.OK.getCode())
                 .message("Token deleted successfully")
-                .messageCd(null).build(), result);
+                .messageCd(200).build(), result);
 
     }
 

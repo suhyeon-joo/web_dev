@@ -1,4 +1,4 @@
-package com.hae.global.dto;
+package com.hae.global.controller;
 
 import com.hae.global.exception.CommonException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,10 +1,10 @@
 package com.hae.has.common.controller;
 
-import com.hae.global.dto.BaseController;
+import com.hae.global.controller.BaseController;
 import com.hae.global.dto.Header;
 import com.hae.global.dto.ResponseData;
 import com.hae.global.enums.HeaderCode;
-import com.hae.global.enums.HeaderMsg;
+import com.hae.global.enums.HeaderCodeMsg;
 import com.hae.has.common.dto.ReqUserLogin;
 import com.hae.has.common.model.User;
 import com.hae.has.common.model.UserFcm;
@@ -14,8 +14,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.hae.global.dto.NetHeader;
@@ -45,7 +43,7 @@ public class UserController extends BaseController {
             {
 
                 log.error("error with find vaildateUserCrendintial");
-                ResponseData<User> result = new ResponseData<>(Header.builder().code(HeaderCode.SERVER_ERROR.getCode()).message(HeaderMsg.AUTH_PASSWORD_NOT_MATCH.getMsg()).messageCd(null).build(), null);
+                ResponseData<User> result = new ResponseData<>(Header.builder().code(HeaderCode.SERVER_ERROR.getCode()).message(HeaderCodeMsg.AUTH_PASSWORD_NOT_MATCH.getMsg()).messageCd(HeaderCodeMsg.AUTH_PASSWORD_NOT_MATCH.getCode()).build(), null);
                 return ResponseEntity.ok(result.getBody());
             }
 
@@ -56,7 +54,7 @@ public class UserController extends BaseController {
 
             if (rspHd2.getHeader().getCode() != HeaderCode.OK.getCode()) {
                 log.error("error with find update User Token");
-                ResponseData<User> result = new ResponseData<>(Header.builder().code(HeaderCode.SERVER_ERROR.getCode()).message("사용자 토큰 업데이트 중 실패하였습니다.").messageCd(null).build(), null);
+                ResponseData<User> result = new ResponseData<>(Header.builder().code(HeaderCode.SERVER_ERROR.getCode()).message("사용자 토큰 업데이트 중 실패하였습니다.").messageCd(401).build(), null);
                 return ResponseEntity.ok(result.getBody());
             }
 
@@ -69,7 +67,7 @@ public class UserController extends BaseController {
         catch (Exception e)
         {
             log.error("error", e);
-            ResponseData<User> result = new ResponseData<>(Header.builder().code(HeaderCode.SERVER_ERROR.getCode()).message(e.toString()).messageCd(null).build(), null);
+            ResponseData<User> result = new ResponseData<>(Header.builder().code(HeaderCode.SERVER_ERROR.getCode()).message(e.toString()).messageCd(401).build(), null);
             return ResponseEntity.ok(result.getBody());
         }
     }

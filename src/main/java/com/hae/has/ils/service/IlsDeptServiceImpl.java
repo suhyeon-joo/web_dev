@@ -4,7 +4,7 @@ package com.hae.has.ils.service;
 import com.hae.global.dto.Header;
 import com.hae.global.dto.ResponseData;
 import com.hae.global.enums.HeaderCode;
-import com.hae.global.enums.HeaderMsg;
+import com.hae.global.enums.HeaderCodeMsg;
 import com.hae.has.ils.model.IlsDept;
 import com.hae.has.ils.repository.IlsDeptRepository;
 import lombok.extern.log4j.Log4j2;
@@ -29,7 +29,7 @@ public class IlsDeptServiceImpl implements IlsDeptService {
             return new ResponseData<>(
                     Header.builder()
                             .code(HeaderCode.OK.getCode())
-                            .message(HeaderMsg.ILS_DEPT_LIST_FOUND.getMsg())
+                            .message("")
                             .build(),
                     ilsDepts
             );
@@ -39,7 +39,7 @@ public class IlsDeptServiceImpl implements IlsDeptService {
         return new ResponseData<>(
                 Header.builder()
                         .code(HeaderCode.OK.getCode())
-                        .message(HeaderMsg.ILS_DEPT_LIST_FOUND.getMsg())
+                        .message("")
                         .build(),
                 ilsDepts
         );

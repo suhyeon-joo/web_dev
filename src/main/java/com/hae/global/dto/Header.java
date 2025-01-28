@@ -11,5 +11,5 @@ import lombok.*;
 public class Header {
     private Integer code;
     private String message;
-    private String messageCd;
+    private int messageCd;
 }
