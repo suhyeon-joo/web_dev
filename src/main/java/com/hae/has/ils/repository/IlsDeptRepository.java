@@ -1,11 +1,10 @@
-package com.hae.has.ils.admin.repository;
+package com.hae.has.ils.repository;
 
+import com.hae.has.ils.model.IlsDept;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import com.hae.has.ils.admin.model.IlsDept;
 
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public interface IlsDeptRepository extends JpaRepository<IlsDept, Long> {

@@ -2,10 +2,12 @@ package com.hae.has.common.model;
 import com.hae.global.model.BaseVO;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 @Table(name="user_fcm", schema="v4")

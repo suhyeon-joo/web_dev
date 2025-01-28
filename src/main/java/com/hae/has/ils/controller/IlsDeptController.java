@@ -1,9 +1,8 @@
-package com.hae.has.ils.admin.controller;
+package com.hae.has.ils.controller;
 
 import com.hae.global.dto.ResponseData;
-import com.hae.global.dto.Header;
 import com.hae.global.enums.HeaderCode;
-import com.hae.has.ils.admin.model.IlsDept;
+import com.hae.has.ils.model.IlsDept;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.log4j.Log4j2;
@@ -11,10 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.hae.global.exception.CommonException;
-import com.hae.has.ils.admin.service.IlsDeptService;
+import com.hae.has.ils.service.IlsDeptService;
 import java.util.List;
-import java.util.Map;
 
 /**
  * ILS 부서 관리 API 컨트롤러

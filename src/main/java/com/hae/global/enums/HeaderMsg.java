@@ -11,6 +11,7 @@ public enum HeaderMsg {
     AUTH_SUCCESS("인증에 성공하였습니다"),
     AUTH_UNAUTHORIZED("권한이 없습니다"),
     ILS_DEPT_LIST_FOUND("부서 리스트를 불러왔습니다.");
+
     private final String msg;
 
     HeaderMsg(String msg){this.msg = msg;}

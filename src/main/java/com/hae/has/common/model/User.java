@@ -1,6 +1,7 @@
 package com.hae.has.common.model;
 
 import com.hae.global.model.BaseVO;
+import com.vladmihalcea.hibernate.type.array.LongArrayType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -118,7 +119,7 @@ import java.util.Map;
                 name = "User.spSelectUserByPvk",
                 procedureName = "v4.sp_select_user_by_pvk",
                 parameters = {
-                        @StoredProcedureParameter(mode = ParameterMode.IN, name = "pvk", type = String.class),
+                        @StoredProcedureParameter(mode = ParameterMode.IN, name = "userToken", type = String.class),
                         @StoredProcedureParameter(mode = ParameterMode.OUT, name = "result", type = String.class)
                 }
         ),
@@ -136,6 +137,14 @@ import java.util.Map;
                 parameters = {
                         @StoredProcedureParameter(mode = ParameterMode.IN, name = "siteId", type = String.class),
                         @StoredProcedureParameter(mode = ParameterMode.OUT, name = "result", type = String.class)
+                }
+        ),
+        @NamedStoredProcedureQuery(
+                name = "User.spSelectUserById",
+                procedureName = "v4.sp_select_user_by_id",
+                parameters = {
+                        @StoredProcedureParameter(mode = ParameterMode.IN, name = "userId", type = String.class),
+                        @StoredProcedureParameter(mode = ParameterMode.OUT, name = "result", type = User.class)
                 }
         )
 })
@@ -279,14 +288,17 @@ public class User extends BaseVO implements Serializable {
     @Column(name = "access_level", length = 30)
     private String accessLevel;
 
+    @Type(LongArrayType.class)
     @Column(name = "site_ids", columnDefinition = "bigint[]")
-    private List<Long> siteIds;
+    private Long[] siteIds;
 
     @Column(name = "home_typ", length = 20)
     private String homeTyp;
 
     @Column(name = "auth_type", length = 18)
     private String authType;
+
+    private String userToken;
 
 
 }

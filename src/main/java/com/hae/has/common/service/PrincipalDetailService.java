@@ -33,7 +33,5 @@ public class PrincipalDetailService implements UserDetailsService {
                         .jobRole(jwtUtil.extractUserRole(access))
                         .build()
         );
-
-
     }
 }

@@ -1,22 +1,18 @@
-package com.hae.has.ils.admin.service;
+package com.hae.has.ils.service;
 
 
 import com.hae.global.dto.Header;
 import com.hae.global.dto.ResponseData;
 import com.hae.global.enums.HeaderCode;
 import com.hae.global.enums.HeaderMsg;
-import com.hae.global.exception.CommonException;
-import com.hae.has.ils.admin.model.IlsDept;
-import com.hae.has.ils.admin.repository.IlsDeptRepository;
+import com.hae.has.ils.model.IlsDept;
+import com.hae.has.ils.repository.IlsDeptRepository;
 import lombok.extern.log4j.Log4j2;
-import org.hibernate.jdbc.Expectation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 @Log4j2
 @Service

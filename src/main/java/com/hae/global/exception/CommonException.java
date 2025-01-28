@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @ToString
-public class CommonException extends RuntimeException implements Serializable {
+public class CommonException extends RuntimeException {
     @Serial
     private static final long serialVersionUID = 2607982687853635669L;
 
@@ -20,12 +20,23 @@ public class CommonException extends RuntimeException implements Serializable {
     private Integer code;
     private String message;
 
-    public CommonException(String s, Exception e) {
-
+    public CommonException(String message) {
+        super(message);
     }
 
-    public CommonException(String s) {
-
+    public CommonException(Throwable e) {
+        super(e);
     }
+
+    public CommonException(String message, Throwable e) {
+        super(message, e);
+    }
+
+    public CommonException(String message, HttpStatus status) {
+        super(message);
+        this.status = status;
+        //setStatus(status);
+    }
+
 
 }

@@ -17,5 +17,32 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Procedure(name = "User.spDeleteUserToken")
     String deleteUserToken(String userToken);
 
+    @Procedure(name="User.spDeleteUserFcmByNotLogin")
+    void deleteUserFcmByNotLogin();
+
+    @Procedure(name="User.spSelectUsersSiteListByPvk")
+    String selectUsersSiteListByPvk(String pvk, String includeNotUse);
+
+    @Procedure(name="User.spSelectUsersCompanyListByPvk")
+    String selectUsersCompanyListByPvk(String pvk, String includeNotUse);
+
+    @Procedure(name="User.spSelectUsersListByPvk")
+    String selectUsersListByPvk(String pvk);
+
+    @Procedure(name="User.spCheckAccessCompany")
+    String checkAccessCompany(String userToken, String companyId);
+    @Procedure(name="User.spCheckAccessSite")
+    String checkAccessSite(String userToken, String siteId);
+    @Procedure(name="User.spSelectAllUserByUserToken")
+    String selectAllUserByUserToken(String userToken);
+    @Procedure(name="User.spSelectUserByPvk")
+    String selectUserByPvk(String userToken);
+    @Procedure(name="User.spSelectUserDetailById")
+    String selectUserDetailById(String id);
+    @Procedure(name="User.spSelectUserListBySiteId")
+    String selectUserListBySiteId(String siteId);
+
+    @Procedure(name="User.spSelectUserById")
+    User selectUserById(String userId);
     User findByUserId(String userId);
 }

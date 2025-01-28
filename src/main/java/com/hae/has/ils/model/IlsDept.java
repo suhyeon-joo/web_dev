@@ -1,4 +1,4 @@
-package com.hae.has.ils.admin.model;
+package com.hae.has.ils.model;
 
 import jakarta.persistence.*;
 import lombok.Data;

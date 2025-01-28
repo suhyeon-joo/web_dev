@@ -1,12 +1,9 @@
-package com.hae.has.ils.admin.service;
+package com.hae.has.ils.service;
 
 import com.hae.global.dto.ResponseData;
-import com.hae.has.ils.admin.model.IlsDept;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
+import com.hae.has.ils.model.IlsDept;
 
 import java.util.List;
-import java.util.Map;
 
 public interface IlsDeptService {
     public ResponseData<List<IlsDept>> getDeptList(Long siteId, String deptName);

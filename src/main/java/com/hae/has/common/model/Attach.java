@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 @Table(name="esaatth", schema = "emro")

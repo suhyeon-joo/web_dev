@@ -49,6 +49,16 @@ public class UserServiceImpl implements UserService{
                         .messageCd(null).build(), user))
                 .orElse(new ResponseData<>(Header.builder().code(HeaderCode.SERVER_ERROR.getCode()).message("User not found").messageCd(null).build() , null));
     }
+
+    public ResponseData<User> selectUserById(String userId) {
+        User user = userRepository.selectUserById(userId);
+        if (user == null)
+            return new ResponseData<>(Header.builder().code(HeaderCode.SERVER_ERROR.getCode())
+                .message("Failed to find User")
+                .messageCd(null).build(), null);
+        return new ResponseData<>(Header.builder().code(HeaderCode.OK.getCode()).message("find User successfully").messageCd(null).build(), user);
+    }
+
     public ResponseData<String> deleteUserToken(String userToken) {
         String result = userRepository.deleteUserToken(userToken);
         if (result == null) {
