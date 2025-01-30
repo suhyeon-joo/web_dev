@@ -9,24 +9,23 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Locale;
 
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.hae.global.conf.BaseConstant;
 import com.hae.global.dto.ResultMessage;
 import com.hae.global.thread.GlobalMapThreadLocal;
 import com.hae.global.util.StringUtil;
 import com.hae.global.dto.NetHeader;
+
+/**
+ * 모든 컨트롤러가 상속하는 BaseController에서 공통적인 요청 처리 로직을 정의.
+ * setResultMessage() 메서드를 사용하여 Model에 결과 메시지를 추가하는 방식으로 예외 메시지 처리를 지원.
+ */
 @Data
 public class BaseController {
 
@@ -39,13 +38,13 @@ public class BaseController {
     public BaseController() {
         RequestMapping requestMapping = this.getClass().getAnnotation(RequestMapping.class);
 //		System.out.println(">>>>>>>>requestMapping.value() =="+requestMapping.value());
-        if (requestMapping == null)
-            throw new CommonException(String.format("%s : RequestMapping is not found", getClass()));
+        if (requestMapping == null || requestMapping.value().length == 0) {
+            throw new CommonException("RequestMapping이 존재하지 않습니다.", HttpStatus.BAD_REQUEST);
+        }
         if (requestMapping.value().length > 0) {
             this.baseUrls = requestMapping.value();
             bubbleSortByLength();
-        } else
-            throw new CommonException(String.format("%s : RequestMapping value is not found", getClass()));
+        }
     }
 
     private void bubbleSortByLength() {

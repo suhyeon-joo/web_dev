@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 404에러 페이지처리에 사용된다.
+ * ResponseData 객체를 활용하여 표준 응답을 제공.
  */
 @CrossOrigin(origins = "*")
 @RestController /* return : return Type 지정 */

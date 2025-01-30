@@ -10,6 +10,7 @@ import lombok.*;
 @ToString
 public class Header {
     private Integer code;
+    private String codeName;
     private String message;
     private int messageCd;
 }
